@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Manager — Restaurant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="src/styles/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <h1>🍽️ Order Manager</h1>
+      <p class="subtitle">Restaurant — lists workshop, order service process</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="summary-panel" id="summary-panel"></section>
+
+    <div class="actions-bar">
+      <button class="btn-primary" id="btn-new-order">New order</button>
+      <button class="btn-secondary" id="btn-search">Search</button>
+    </div>
+
+    <section class="board" id="board"></section>
+  </main>
+
+  <!-- Modal: new order -->
+  <div class="overlay hidden" id="overlay-new">
+    <div class="modal">
+      <h2>New order</h2>
+      <form id="form-new-order">
+        <div class="field">
+          <label for="no-customer">Customer</label>
+          <input type="text" id="no-customer" required placeholder="Santiago" />
+        </div>
+        <div class="field">
+          <label for="no-table">Table</label>
+          <input type="number" id="no-table" min="1" required placeholder="5" />
+        </div>
+        <div class="field">
+          <label>Products</label>
+          <div id="no-products"></div>
+          <button type="button" class="btn-secondary btn-small" id="no-add-product">
+            + Add product
+          </button>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="no-cancel">Cancel</button>
+          <button type="submit" class="btn-primary">Add order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: edit order -->
+  <div class="overlay hidden" id="overlay-edit">
+    <div class="modal">
+      <h2>Edit order</h2>
+      <form id="form-edit-order">
+        <input type="hidden" id="eo-id" />
+        <div class="field">
+          <label for="eo-customer">Customer</label>
+          <input type="text" id="eo-customer" required />
+        </div>
+        <div class="field">
+          <label for="eo-table">Table</label>
+          <input type="number" id="eo-table" min="1" required />
+        </div>
+        <div class="field">
+          <label>Products</label>
+          <div id="eo-products"></div>
+          <button type="button" class="btn-secondary btn-small" id="eo-add-product">
+            + Add product
+          </button>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="eo-cancel">Cancel</button>
+          <button type="submit" class="btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: record payment -->
+  <div class="overlay hidden" id="overlay-payment">
+    <div class="modal">
+      <h2>Record payment</h2>
+      <div id="payment-detail"></div>
+      <div class="payment-method">
+        <label><input type="radio" name="payment-method" value="Cash" checked /> Cash</label>
+        <label><input type="radio" name="payment-method" value="Card" /> Card</label>
+        <label><input type="radio" name="payment-method" value="Transfer" /> Transfer</label>
+      </div>
+      <input type="hidden" id="payment-id" />
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="payment-cancel">Cancel</button>
+        <button type="button" class="btn-primary" id="payment-confirm">Record payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: search order -->
+  <div class="overlay hidden" id="overlay-search">
+    <div class="modal">
+      <h2>Search order</h2>
+      <div class="field">
+        <label for="sr-field">Search by</label>
+        <select id="sr-field">
+          <option value="id">Order number</option>
+          <option value="customer">Customer</option>
+          <option value="table">Table</option>
+          <option value="status">Status</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="sr-value">Value</label>
+        <input type="text" id="sr-value" placeholder="E.g.: 5" />
+      </div>
+      <button type="button" class="btn-primary" id="sr-search-btn">Search</button>
+      <div class="search-results" id="sr-results"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="sr-close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="dist/bundle.js"></script>
+</body>
+</html>

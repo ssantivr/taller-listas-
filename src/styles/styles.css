@@ -1,0 +1,549 @@
+/* ==========================================================================
+   Order Manager — Restaurant
+   Visual identity: the kitchen "ticket" — the slip that travels from the
+   server to the kitchen and back to checkout. The board is designed as the
+   ticket rail above the kitchen pass; each order is a perforated paper
+   slip that moves from one clip to the next.
+
+   Palette (order "temperature" through the process):
+     requested → kitchen (hot) → ready → served → checkout → paid (cold)
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap");
+
+:root {
+  /* Ink and paper */
+  --ink: #2a231c;
+  --ink-soft: #6b6053;
+  --paper: #f4ecd9;
+  --cardstock: #fffcf4;
+  --rail: #e6d9bb;
+  --border: #ded0ab;
+
+  /* Brand accents */
+  --ember: #bf4127;
+  --ember-dark: #9c3420;
+  --laurel: #3c5a45;
+  --laurel-dark: #2c4433;
+
+  /* Temperature ramp per stage */
+  --st-requested: #77869a;
+  --st-kitchen: #bf4127;
+  --st-ready: #cf8f2e;
+  --st-served: #3f7a5c;
+  --st-checkout: #9c6a34;
+  --st-paid: #2c4433;
+
+  --shadow-slip: 0 1px 0 rgba(42, 35, 28, 0.05), 0 6px 16px -8px rgba(42, 35, 28, 0.35);
+  --shadow-modal: 0 24px 60px -12px rgba(20, 16, 10, 0.45);
+
+  --font-display: "Fraunces", "Iowan Old Style", ui-serif, Georgia, serif;
+  --font-ui: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-ticket: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(42, 35, 28, 0.05) 1px, transparent 0);
+  background-size: 22px 22px;
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--ember);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Header                                                                 */
+/* ---------------------------------------------------------------------- */
+
+header.app-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 30px 32px 26px;
+  border-bottom: 4px solid var(--ember);
+}
+
+header.app-header .brand {
+  max-width: 1500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+header.app-header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2rem;
+  letter-spacing: 0.01em;
+}
+
+header.app-header .subtitle {
+  margin: 0;
+  font-family: var(--font-ticket);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  color: #d9c9a3;
+  text-transform: none;
+}
+
+/* ---------------------------------------------------------------------- */
+/* General container                                                     */
+/* ---------------------------------------------------------------------- */
+
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 24px 24px 60px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Summary — strip of ticket-style tiles                                 */
+/* ---------------------------------------------------------------------- */
+
+.summary-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 22px;
+}
+
+.summary-item {
+  flex: 1;
+  min-width: 128px;
+  background: var(--cardstock);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--color-stage, var(--ember));
+  border-radius: 4px;
+  padding: 10px 14px 12px;
+  position: relative;
+}
+
+.summary-item .count {
+  font-family: var(--font-ticket);
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.summary-item .label {
+  margin-top: 4px;
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Action bar                                                            */
+/* ---------------------------------------------------------------------- */
+
+.actions-bar {
+  display: flex;
+  gap: 10px;
+  margin: 4px 0 22px;
+  flex-wrap: wrap;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  transition: transform 0.05s ease-in, background-color 0.12s, opacity 0.12s;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--ember);
+  color: #fff8ef;
+}
+
+.btn-primary:hover {
+  background: var(--ember-dark);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--cardstock);
+  border-color: var(--ink-soft);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--ember-dark);
+  border: 1.5px solid rgba(191, 65, 39, 0.35);
+}
+
+.btn-danger:hover {
+  background: rgba(191, 65, 39, 0.08);
+}
+
+.btn-small {
+  padding: 6px 11px;
+  font-size: 0.76rem;
+  border-radius: 3px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Board — the kitchen "pass", wooden rail with ticket columns            */
+/* ---------------------------------------------------------------------- */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(232px, 1fr));
+  gap: 14px;
+  background: var(--rail);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px;
+  overflow-x: auto;
+}
+
+.column {
+  background: var(--cardstock);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+}
+
+.column-header {
+  padding: 12px 14px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  color: #fff8ef;
+  border-radius: 3px 3px 0 0;
+}
+
+.column-header h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+
+.column-header .count {
+  font-family: var(--font-ticket);
+  font-size: 0.74rem;
+  opacity: 0.92;
+  white-space: nowrap;
+}
+
+.col-requested .column-header { background: var(--st-requested); }
+.col-kitchen .column-header { background: var(--st-kitchen); }
+.col-ready .column-header { background: var(--st-ready); }
+.col-served .column-header { background: var(--st-served); }
+.col-checkout .column-header { background: var(--st-checkout); }
+.col-paid .column-header { background: var(--st-paid); }
+
+/* perforated border — the "tear line" between the ticket header and body */
+.column-sort {
+  padding: 8px 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background-image: linear-gradient(
+    to right,
+    var(--border) 0,
+    var(--border) 5px,
+    transparent 5px,
+    transparent 10px
+  );
+  background-position: bottom;
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+}
+
+.column-sort label {
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+}
+
+.column-sort select {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  padding: 3px 5px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.column-body {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Order card — the ticket / slip                                        */
+/* ---------------------------------------------------------------------- */
+
+.order-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 11px 13px;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: var(--shadow-slip);
+}
+
+.order-card .title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-ticket);
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--ink);
+  padding-bottom: 5px;
+  background-image: linear-gradient(
+    to right,
+    var(--border) 0,
+    var(--border) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  background-position: bottom;
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+}
+
+.order-card .customer {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.order-card .products {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.order-card .total {
+  font-family: var(--font-ticket);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--ember-dark);
+  align-self: flex-end;
+}
+
+.order-card .actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Empty list                                                             */
+/* ---------------------------------------------------------------------- */
+
+.empty-list {
+  text-align: center;
+  color: var(--ink-soft);
+  padding: 30px 10px;
+  font-size: 0.8rem;
+  border: 1.5px dashed var(--border);
+  border-radius: 4px;
+  margin: 2px;
+}
+
+.empty-list .emoji {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Modals                                                                 */
+/* ---------------------------------------------------------------------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 19, 13, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal {
+  background: var(--cardstock);
+  border-radius: 6px;
+  padding: 24px 26px;
+  width: 440px;
+  max-width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-modal);
+  border-top: 4px solid var(--ember);
+}
+
+.modal h2 {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--ink);
+}
+
+.field {
+  margin-bottom: 13px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--ink-soft);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 9px 11px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--ember);
+}
+
+.product-row {
+  display: grid;
+  grid-template-columns: 2fr 0.8fr 1fr auto;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.product-row input {
+  padding: 7px 9px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  background: var(--paper);
+  color: var(--ink);
+  min-width: 0;
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-ticket);
+  font-weight: 600;
+  border-top: 1.5px dashed var(--border);
+  padding-top: 9px;
+  margin-top: 9px;
+}
+
+.payment-method {
+  display: flex;
+  gap: 16px;
+  margin: 14px 0;
+  flex-wrap: wrap;
+}
+
+.payment-method label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.search-results {
+  margin-top: 12px;
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.no-results {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Responsive                                                             */
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  header.app-header {
+    padding: 22px 18px;
+  }
+
+  header.app-header h1 {
+    font-size: 1.55rem;
+  }
+
+  .container {
+    padding: 18px 14px 44px;
+  }
+
+  .board {
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: 82vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

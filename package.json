@@ -1,0 +1,15 @@
+{
+  "name": "restaurant-order-list-workshop",
+  "version": "1.0.0",
+  "description": "Lists workshop applied to a case study: order management for a restaurant (TypeScript)",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "bundle": "esbuild src/main.ts --bundle --outfile=dist/bundle.js --format=iife --target=es2020"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.0.1",
+    "typescript": "^5.9.3"
+  }
+}
