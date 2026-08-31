@@ -1,7 +1,3 @@
-// main.ts
-// Application entry point. Connects the list logic (OrderList) with the
-// DOM and dynamically updates the interface.
-
 import { OrderList, SortField, SearchField } from "./services/OrderList";
 import {
   Order,
@@ -15,9 +11,7 @@ import { Product } from "./models/Product";
 
 const orderList = new OrderList();
 
-// ---------------------------------------------------------------------
-// Visual configuration for each board column
-// ---------------------------------------------------------------------
+
 interface ColumnConfig {
   status: OrderStatus;
   title: string;
@@ -44,9 +38,7 @@ const sortByColumn: Record<OrderStatus, SortField> = {
   paid: "createdAt",
 };
 
-// ---------------------------------------------------------------------
-// Initial sample data (so the board doesn't start empty)
-// ---------------------------------------------------------------------
+
 function loadInitialData(): void {
   const o1 = createOrder("Santiago", 5, [
     { id: crypto.randomUUID(), name: "Burger", quantity: 2, unitPrice: 15000 },
@@ -71,9 +63,6 @@ function loadInitialData(): void {
   orderList.advanceOrder(o1.id); // Santiago -> ready
 }
 
-// ---------------------------------------------------------------------
-// Rendering of the top summary
-// ---------------------------------------------------------------------
 function renderSummary(): void {
   const panel = document.getElementById("summary-panel")!;
   const count = orderList.countAll();
@@ -87,9 +76,7 @@ function renderSummary(): void {
   }).join("");
 }
 
-// ---------------------------------------------------------------------
-// Rendering of the full board (the 6 lists / columns)
-// ---------------------------------------------------------------------
+
 function renderBoard(): void {
   const board = document.getElementById("board")!;
   board.innerHTML = "";
@@ -249,9 +236,6 @@ function updateUI(): void {
   renderBoard();
 }
 
-// ---------------------------------------------------------------------
-// Modal: New order
-// ---------------------------------------------------------------------
 function createProductRow(container: HTMLElement): void {
   const row = document.createElement("div");
   row.className = "product-row";
@@ -315,9 +299,7 @@ function setupNewOrderModal(): void {
   });
 }
 
-// ---------------------------------------------------------------------
-// Modal: Edit order
-// ---------------------------------------------------------------------
+
 function openEditModal(order: Order): void {
   const overlay = document.getElementById("overlay-edit")!;
   (document.getElementById("eo-id") as HTMLInputElement).value = order.id;
@@ -370,9 +352,6 @@ function setupEditOrderModal(): void {
   });
 }
 
-// ---------------------------------------------------------------------
-// Modal: Record payment
-// ---------------------------------------------------------------------
 function openPaymentModal(order: Order): void {
   const overlay = document.getElementById("overlay-payment")!;
   (document.getElementById("payment-id") as HTMLInputElement).value = order.id;
@@ -417,9 +396,7 @@ function setupPaymentModal(): void {
   });
 }
 
-// ---------------------------------------------------------------------
-// Modal: Search order
-// ---------------------------------------------------------------------
+
 function setupSearchModal(): void {
   const overlay = document.getElementById("overlay-search")!;
   const results = document.getElementById("sr-results")!;
@@ -454,9 +431,7 @@ function setupSearchModal(): void {
   });
 }
 
-// ---------------------------------------------------------------------
-// Application startup
-// ---------------------------------------------------------------------
+
 function init(): void {
   loadInitialData();
   setupNewOrderModal();

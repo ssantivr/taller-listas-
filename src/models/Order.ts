@@ -1,6 +1,3 @@
-// Order.ts
-// Represents a customer's order, with all of its information and its
-// status within the restaurant's service process.
 
 import { Product, productSubtotal } from "./Product";
 

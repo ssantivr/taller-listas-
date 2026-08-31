@@ -1,5 +1,3 @@
-// Product.ts
-// Represents a product requested within an order.
 
 export interface Product {
   id: string;

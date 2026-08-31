@@ -1,7 +1,3 @@
-// OrderList.ts
-// Central service of the workshop: manages the order lists at each stage
-// of the restaurant's process and exposes the operations on lists (add,
-// remove, modify, search, sort, and move between lists).
 
 import { Order, OrderStatus, PaymentMethod } from "../models/Order";
 import { Product } from "../models/Product";
